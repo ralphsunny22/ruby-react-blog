@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     end
 
     def login
-        @user = User.find_by(username: user_params[:username])
+        @user = User.find_by(name: user_params[:name])
         if @user && @user.authenticate(user_params[:password])
             token = encode_token({ user_id: @user.id })
             render json: { user: @user, token: token }, status: :ok
@@ -23,8 +23,8 @@ class UsersController < ApplicationController
 
     private
     def user_params
-        # params.require(:user).permit(:name, :email, :password)
-        params.require(:user).permit(:username, :password)
+        params.require(:user).permit(:name, :email, :password)
+        # params.require(:user).permit(:name, :password)
     end
     
 end
